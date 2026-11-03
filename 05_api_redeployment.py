@@ -220,7 +220,8 @@ experimentId = runsDf.iloc[-1]['experiment_id']
 experimentRunId = runsDf.iloc[-1]['run_id']
 
 modelPath = "artifacts"
-modelName = "FraudCLF" + USERNAME
+modelName = "FraudCLF_" + os.environ.get("HADOOP_USER_NAME")
+# modelName = "FraudCLF" + USERNAME
 
 deployment = ModelReDeployment(projectId, USERNAME)
 getLatestDeploymentResponse = deployment.get_latest_deployment_details(modelName)
@@ -241,7 +242,7 @@ mem = 4
 replicas = 1
 
 #runtimeId = "docker.repository.cloudera.com/cloudera/cdsw/ml-runtime-pbj-workbench-python3.10-standard:2025.09.1-b5" #Modify as needed
-runtimeId = "docker.repository.cloudera.com/cloudera/cdsw/ml-runtime-pbj-workbench-python3.10-standard:2026.01.1-b6"
+runtimeId = "docker.repository.cloudera.com/cloudera/cdsw/ml-runtime-pbj-workbench-python3.10-standard:2026.08.1-b5"
 
 createModelBuildResponse = deployment.createModelBuild(projectId, modelVersionId, modelCreationId, runtimeId, cpu, mem, replicas)
 modelBuildId = createModelBuildResponse.id
