@@ -43,6 +43,9 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, recall_score
+# Added
+from mlflow.models import infer_signature
+# End
 import mlflow.sklearn
 from xgboost import XGBClassifier
 from datetime import date
@@ -83,7 +86,7 @@ with mlflow.start_run():
 
     model.fit(X_train, y_train, eval_set=[(X_test, y_test)], verbose=False)
     y_pred = model.predict(X_test)
-
+    
     accuracy = accuracy_score(y_test, y_pred)
 
     print("Accuracy: %.2f%%" % (accuracy * 100.0))
@@ -95,7 +98,17 @@ with mlflow.start_run():
     mlflow.log_param("max_depth", 4) # Step 2:
     # Step 3:
 
-    mlflow.xgboost.log_model(model, artifact_path="artifacts")#, registered_model_name="my_xgboost_model"
+    #mlflow.xgboost.log_model(model, artifact_path="artifacts")#, registered_model_name="my_xgboost_model"
+    # Infer the input/output schema
+    #X_train = X_train.astype("float64")
+    #signature = infer_signature(X_train, y_pred)
+    #mlflow.xgboost.log_model(
+        #model, 
+        #artifact_path="artifacts",
+        #signature=signature,
+        #input_example=X_train.iloc[:1]
+    #)
+    mlflow.xgboost.log_model(model, artifact_path="artifacts")
 
 
 def getLatestExperimentInfo(experimentName):
