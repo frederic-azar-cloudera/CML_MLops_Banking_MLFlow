@@ -243,4 +243,3 @@ def update_outputs(threshold, revenue_1, revenue_0, penalty_fp):
 # ----------------------------
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1", port=int(os.environ["CDSW_APP_PORT"]))
-
