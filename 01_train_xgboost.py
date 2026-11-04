@@ -52,7 +52,8 @@ from datetime import date
 import cml.data_v1 as cmldata
 import pyspark.pandas as ps
 
-USERNAME = os.environ["PROJECT_OWNER"]
+USERNAME = os.environ.get("HADOOP_USER_NAME")
+#USERNAME = os.environ["PROJECT_OWNER"]
 DBNAME = os.environ["DBNAME_PREFIX"]+"_"+USERNAME
 CONNECTION_NAME = os.environ["SPARK_CONNECTION_NAME"]
 
@@ -74,7 +75,7 @@ X_train, X_test, y_train, y_test = train_test_split(df.drop("fraud_trx", axis=1)
 with mlflow.start_run():
 
 #    model = XGBClassifier(use_label_encoder=False, eval_metric="logloss")
-    model = XGBClassifier(use_label_encoder=False, max_depth=4, eval_metric="logloss")
+    model = XGBClassifier(use_label_encoder=False, max_depth=5, eval_metric="logloss")
     # Step 1: cambiar test_size linea 69 y recorrer
     # Step 2: cambiar linea 74, agregar linea 97, y recorrer
       # linea 75: model = XGBClassifier(use_label_encoder=False, max_depth=4, eval_metric="logloss")
@@ -95,7 +96,7 @@ with mlflow.start_run():
     mlflow.log_param("accuracy", accuracy)
     mlflow.log_param("test_size", test_size)
 
-    mlflow.log_param("max_depth", 4) # Step 2:
+    mlflow.log_param("max_depth", 5) # Step 2:
     # Step 3:
 
     #mlflow.xgboost.log_model(model, artifact_path="artifacts")#, registered_model_name="my_xgboost_model"
