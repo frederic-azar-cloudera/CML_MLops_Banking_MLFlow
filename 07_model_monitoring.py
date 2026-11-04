@@ -59,8 +59,9 @@ from pandas import json_normalize
 # You can access all models with API V2
 client = cmlapi.default_client()
 
-username = os.environ["PROJECT_OWNER"]
-modelName = "FraudCLF_" + os.environ.get("HADOOP_USER_NAME")
+username = os.environ.get("HADOOP_USER_NAME")
+#username = os.environ["PROJECT_OWNER"]
+modelName = "FraudCLF_" + username
 
 project_id = os.environ["CDSW_PROJECT_ID"]
 client.list_models(project_id)
