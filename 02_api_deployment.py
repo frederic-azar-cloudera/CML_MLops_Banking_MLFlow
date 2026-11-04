@@ -49,7 +49,8 @@ client = cmlapi.default_client()
 client.list_projects()
 
 projectId = os.environ['CDSW_PROJECT_ID']
-username = os.environ["PROJECT_OWNER"]
+username = os.environ.get("HADOOP_USER_NAME")
+#username = os.environ["PROJECT_OWNER"]
 experimentName = "xgb-cc-fraud-{0}".format(username)
 
 experimentId = mlflow.get_experiment_by_name(experimentName).experiment_id
@@ -61,8 +62,8 @@ experimentRunId = runsDf.iloc[-1]['run_id']
 deployment = ModelDeployment(client, projectId, username, experimentName, experimentId)
 
 modelPath = "artifacts"
-modelName = "FraudCLF_" + os.environ.get("HADOOP_USER_NAME")
-#modelName = "FraudCLF" + username
+#modelName = "FraudCLF_" + os.environ.get("HADOOP_USER_NAME")
+modelName = "FraudCLF_" + username
 
 # HOLD FOR A MOMENT AND THEN RUN THE FOLLOWING
 registeredModelResponse = deployment.registerModelFromExperimentRun(modelName, experimentId, experimentRunId, modelPath)
