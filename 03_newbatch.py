@@ -154,7 +154,8 @@ class BankDataGen:
 
 def main():
 
-    USERNAME = os.environ["PROJECT_OWNER"]
+    USERNAME = os.environ.get("HADOOP_USER_NAME")
+    #USERNAME = os.environ["PROJECT_OWNER"]
     DBNAME = os.environ["DBNAME_PREFIX"]+"_"+USERNAME
     CONNECTION_NAME = os.environ["SPARK_CONNECTION_NAME"]
 
@@ -176,4 +177,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
