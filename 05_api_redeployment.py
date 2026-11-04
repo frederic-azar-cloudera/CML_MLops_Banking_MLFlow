@@ -205,7 +205,8 @@ class ModelReDeployment():
             "latest_deployment_crn": model_deployment_crn,
         }
 
-USERNAME = os.environ["PROJECT_OWNER"]
+USERNAME = os.environ.get("HADOOP_USER_NAME")
+#USERNAME = os.environ["PROJECT_OWNER"]
 DBNAME = os.environ["DBNAME_PREFIX"]+"_"+USERNAME
 CONNECTION_NAME = os.environ["SPARK_CONNECTION_NAME"]
 projectId = os.environ['CDSW_PROJECT_ID']
@@ -220,8 +221,8 @@ experimentId = runsDf.iloc[-1]['experiment_id']
 experimentRunId = runsDf.iloc[-1]['run_id']
 
 modelPath = "artifacts"
-modelName = "FraudCLF_" + os.environ.get("HADOOP_USER_NAME")
-# modelName = "FraudCLF" + USERNAME
+#modelName = "FraudCLF_" + os.environ.get("HADOOP_USER_NAME")
+modelName = "FraudCLF_" + USERNAME
 
 deployment = ModelReDeployment(projectId, USERNAME)
 getLatestDeploymentResponse = deployment.get_latest_deployment_details(modelName)
